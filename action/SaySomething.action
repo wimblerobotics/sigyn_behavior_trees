@@ -1,0 +1,9 @@
+# Goal
+string message
+geometry_msgs/PoseStamped pose
+---
+# Result
+builtin_interfaces/Duration total_elapsed_time
+uint16 error_code
+---
+# Feedback
