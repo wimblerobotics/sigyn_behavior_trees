@@ -2,5 +2,6 @@
 build/
 install/
 log/
+compile_commands.json
 *.pyc
 __pycache__/
