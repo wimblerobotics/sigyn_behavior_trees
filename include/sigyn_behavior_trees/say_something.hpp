@@ -1,4 +1,11 @@
+// Copyright 2026 Wimble Robotics
+// SPDX-License-Identifier: Apache-2.0
+
 #pragma once
+
+#include <limits>
+#include <string>
+
 #include <geometry_msgs/msg/pose_stamped.hpp>
 #include <nav2_behavior_tree/bt_action_node.hpp>
 
@@ -9,8 +16,8 @@ namespace sigyn_behavior_trees {
 class SaySomething
     : public nav2_behavior_tree::BtActionNode<sigyn_behavior_trees::action::SaySomething> {
  public:
-  SaySomething(const std::string& xml_tag_name, const std::string& action_name,
-               const BT::NodeConfiguration& conf);
+  SaySomething(const std::string &xml_tag_name, const std::string &action_name,
+               const BT::NodeConfiguration &conf);
   // SaySomething(const std::string& xml_tag_name, const BT::NodeConfig& conf);
   ~SaySomething();
 
@@ -67,9 +74,6 @@ class SaySomething
                                                        "Pose to print"),
     });
   }
-
- private:
-  rclcpp::Node::SharedPtr node_;
 };
 
 }  // namespace sigyn_behavior_trees

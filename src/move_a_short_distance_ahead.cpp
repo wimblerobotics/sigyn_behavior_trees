@@ -1,3 +1,6 @@
+// Copyright 2026 Wimble Robotics
+// SPDX-License-Identifier: Apache-2.0
+
 #include "sigyn_behavior_trees/move_a_short_distance_ahead.hpp"
 
 // #include <cmath>
@@ -6,9 +9,9 @@
 
 namespace sigyn_behavior_trees {
 
-MoveAShortDistanceAhead::MoveAShortDistanceAhead(const std::string& xml_tag_name,
-                                                 const std::string& action_name,
-                                                 const BT::NodeConfiguration& conf)
+MoveAShortDistanceAhead::MoveAShortDistanceAhead(const std::string &xml_tag_name,
+                                                 const std::string &action_name,
+                                                 const BT::NodeConfiguration &conf)
     : BtActionNode<sigyn_behavior_trees::action::MoveAShortDistanceAhead>(xml_tag_name, action_name,
                                                                           conf) {}
 
@@ -30,11 +33,8 @@ void MoveAShortDistanceAhead::initialize() {
 }
 
 void MoveAShortDistanceAhead::on_tick() {
-  if (!BT::isStatusActive(status())) {
-    initialize();
-  }
-
-  printf("MoveAShortDistanceAhead::on_tick()\n");
+  initialize();
+  RCLCPP_INFO(node_->get_logger(), "MoveAShortDistanceAhead::on_tick()");
   increment_recovery_count();
 }
 
@@ -42,9 +42,11 @@ void MoveAShortDistanceAhead::on_tick() {
 
 #include "behaviortree_cpp/bt_factory.h"
 BT_REGISTER_NODES(factory) {
-  BT::NodeBuilder builder = [](const std::string& name, const BT::NodeConfiguration& config) {
-    return std::make_unique<sigyn_behavior_trees::MoveAShortDistanceAhead>(name, "move_a_short_distance_ahead", config);
+  BT::NodeBuilder builder = [](const std::string &name, const BT::NodeConfiguration &config) {
+    return std::make_unique<sigyn_behavior_trees::MoveAShortDistanceAhead>(
+        name, "move_a_short_distance_ahead", config);
   };
 
-  factory.registerBuilder<sigyn_behavior_trees::MoveAShortDistanceAhead>("MoveAShortDistanceAhead", builder);
+  factory.registerBuilder<sigyn_behavior_trees::MoveAShortDistanceAhead>("MoveAShortDistanceAhead",
+                                                                         builder);
 }

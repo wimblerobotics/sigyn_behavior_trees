@@ -1,11 +1,16 @@
+// Copyright 2026 Wimble Robotics
+// SPDX-License-Identifier: Apache-2.0
+
 #pragma once
+
 #include <behaviortree_cpp/action_node.h>
+#include <string>
 
 namespace sigyn_behavior_trees {
 class SS : public BT::SyncActionNode {
  public:
   // If your Node has ports, you must use this constructor signature
-  SS(const std::string& name, const BT::NodeConfig& config) : BT::SyncActionNode(name, config) {}
+  SS(const std::string &name, const BT::NodeConfig &config) : BT::SyncActionNode(name, config) {}
 
   // It is mandatory to define this STATIC method.
   static BT::PortsList providedPorts() {
@@ -25,4 +30,4 @@ class SS : public BT::SyncActionNode {
     return BT::NodeStatus::SUCCESS;
   }
 };
-}  // namespace BT
+}  // namespace sigyn_behavior_trees

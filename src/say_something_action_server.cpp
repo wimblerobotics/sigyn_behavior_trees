@@ -1,3 +1,6 @@
+// Copyright 2026 Wimble Robotics
+// SPDX-License-Identifier: Apache-2.0
+
 #include "rclcpp/rclcpp.hpp"
 #include "rclcpp_action/rclcpp_action.hpp"
 #include "rclcpp_components/register_node_macro.hpp"
@@ -7,8 +10,8 @@
 
 namespace sigyn_behavior_trees {
 /**
- * @class sigyn_behavior_trees::SaySomethingServer
- * @brief An action server which implements charger docking node for AMRs
+ * @class sigyn_behavior_trees::SaySomethingActionServer
+ * @brief An action server for the SaySomething action
  */
 class SaySomethingActionServer : public rclcpp::Node {
  public:
@@ -19,15 +22,14 @@ class SaySomethingActionServer : public rclcpp::Node {
    * @brief A constructor for sigyn_behavior_trees::SaySomethingServer
    * @param options Additional options to control creation of the node.
    */
-  explicit SaySomethingActionServer(const rclcpp::NodeOptions& options = rclcpp::NodeOptions())
+  explicit SaySomethingActionServer(const rclcpp::NodeOptions &options = rclcpp::NodeOptions())
       : Node("say_something_server", options) {
     using namespace std::placeholders;
 
-    auto handle_goal = [this](const rclcpp_action::GoalUUID& uuid,
+    auto handle_goal = [this](const rclcpp_action::GoalUUID &uuid,
                               std::shared_ptr<const SaySomething::Goal> goal) {
-      // RCLCPP_INFO(this->get_logger(), "Received goal request with message %s",
-      // goal->message.c_str());
-      (void)goal;
+      RCLCPP_INFO(this->get_logger(), "Received goal request with message %s",
+                  goal->message.c_str());
       (void)uuid;
       return rclcpp_action::GoalResponse::ACCEPT_AND_EXECUTE;
     };
@@ -67,6 +69,8 @@ class SaySomethingActionServer : public rclcpp::Node {
     m.getRPY(roll, pitch, yaw);
     RCLCPP_INFO(this->get_logger(), "[SaySomething] [x: %4.3f, y: %4.3f, z-rad: %4.3f] %s",
                 pose.pose.position.x, pose.pose.position.y, yaw, message.c_str());
+    auto result = std::make_shared<SaySomething::Result>();
+    goal_handle->succeed(result);
   }
 };
 

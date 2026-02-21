@@ -1,0 +1,7 @@
+---
+Language: Cpp
+BasedOnStyle: Google
+ColumnLimit: 100
+AllowShortFunctionsOnASingleLine: Empty
+DerivePointerAlignment: false
+PointerAlignment: Right

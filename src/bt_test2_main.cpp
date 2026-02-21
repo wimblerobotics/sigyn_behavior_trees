@@ -1,44 +1,27 @@
+// Copyright 2026 Wimble Robotics
+// SPDX-License-Identifier: Apache-2.0
+
 #include <behaviortree_cpp/action_node.h>
 #include <behaviortree_cpp/bt_factory.h>
 #include <behaviortree_cpp/loggers/bt_cout_logger.h>
 
-#include <atomic>
-#include <chrono>
+#include <stdexcept>
+
 #include <rclcpp/rclcpp.hpp>
-// #include <sigyn_behavior_trees/say_something.hpp>
-#include <sigyn_behavior_trees/SS.hpp>
-#include <thread>
+#include <sigyn_behavior_trees/ss.hpp>
 
-// class SaySomething : public BT::ActionNodeBase {
-//  public:
-//   SaySomething(const std::string& name) : ActionNodeBase(name, {}) {}
-
-//   BT::NodeStatus tick() override {
-//     std::cout << "SaySomething::tick()" << std::endl;
-//     return BT::NodeStatus::SUCCESS;
-//   }
-//   static BT::PortsList providedBasicPorts() {
-//     return BT::PortsList({
-//         BT::InputPort<std::string>("message", "Message to log"),
-//     });
-//   }
-//   // static BT::PortsList providedPorts() { return providedBasicPorts({}); }
-//   void halt() override {}
-// };
-
-int main(int argc, char** argv) {
+int main(int argc, char **argv) {
+  if (argc < 2) {
+    throw std::runtime_error("Usage: bt_test2 <xml_path>");
+  }
   rclcpp::init(argc, argv);
-  rclcpp::Node::SharedPtr g_node = rclcpp::Node::make_shared("bt_test1");
-  std::string xml_path;
-  g_node->declare_parameter<std::string>("xml_path", "foo");
-  g_node->get_parameter("xml_path", xml_path);
+  const std::string xml_path = argv[1];
 
   BT::BehaviorTreeFactory factory;
   factory.registerNodeType<sigyn_behavior_trees::SS>("SS");
 
   auto tree = factory.createTreeFromFile(xml_path);
   tree.tickWhileRunning();
-  return 0;
-
+  rclcpp::shutdown();
   return 0;
 }
